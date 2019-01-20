@@ -58,6 +58,7 @@
     <div class="register-btn">
       <mu-button color="primary" @click="register" full-width>注册</mu-button>
     </div>
+    <div>{{isVCode}} {{isPassword}}</div>
   </div>
 </template>
 <script>
@@ -92,7 +93,6 @@ export default {
     },
     register() {
       this.$toast.info("注册");
-      
     },
     checkEmail() {
       // console.log(value);
@@ -132,11 +132,13 @@ export default {
     },
     isVCode: function() {
       //根据verifyCode值的变化返回bool值
-      if (/^[0-9]{6}$/.test(this.verifyCode)) {
+      let codeReg = /^[0-9]{6}$/;
+      if (codeReg.test(this.verifyCode)) {
         //判断6位数字
         this.errorVCodeMsg = "";
         return true;
       } else {
+        // this.errorVCodeMsg = "验证码为6位数字";
         return false;
       }
     },
@@ -144,7 +146,7 @@ export default {
       //根据输入密码password返回返回bool值
       if (this.password) {
         if (this.password.length >= 6 && this.password.length <= 10) {
-           this.errorPasswordMsg = "";
+          this.errorPasswordMsg = "";
           return true;
         } else {
           this.errorPasswordMsg = "密码必须为6-10位";
